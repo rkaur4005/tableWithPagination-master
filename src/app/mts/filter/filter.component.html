@@ -1,0 +1,53 @@
+<md-card>
+  <form fxLayout="column" #f="ngForm">
+
+    <section fxLayout="column">
+      <legend>Status</legend>
+      <md-checkbox *ngFor="let f of filterList" name="nat" [value]="f.value" (change)="onNatChange($event)">{{f.name}}</md-checkbox>
+    </section>
+
+    <!-- Events -->
+    <md-input-container>
+      <input type="text" mdInput placeholder="Events"   [mdAutocomplete]="e" [formControl]="eventCtrl">
+    </md-input-container>
+
+    <md-autocomplete #e="mdAutocomplete">
+      <md-option (onSelectionChange)="changeEvent(event)" *ngFor="let event of filteredEvents | async" [value]="event">
+        {{ event }}
+      </md-option>
+    </md-autocomplete>
+
+
+    <!-- Date -->
+    <md-input-container>
+      <input [mdDatepicker]="picker" mdInput placeholder="Date" placeholder="Choose a date">
+      <button mdSuffix [mdDatepickerToggle]="picker"></button>
+    </md-input-container>
+    <md-datepicker #picker></md-datepicker>
+
+
+    <!-- System -->
+    <md-input-container>
+      <input type="text" mdInput placeholder="System" [mdAutocomplete]="s" [formControl]="systemCtrl">
+    </md-input-container>
+
+    <md-autocomplete #s="mdAutocomplete" >
+      <md-option (onSelectionChange)="changeSystem(system)" *ngFor="let system of filteredSystems | async" [value]="system">
+        {{ system }}
+      </md-option>
+    </md-autocomplete>
+
+    <!-- Office -->
+    <md-input-container>
+      <input type="text" mdInput placeholder="Office" [mdAutocomplete]="o" [formControl]="officeCtrl">
+    </md-input-container>
+    <md-autocomplete #o="mdAutocomplete">
+      <md-option (onSelectionChange)="changeOffice(office)" *ngFor="let office of filteredOffices | async" [value]="office">
+        {{ office }}
+      </md-option>
+    </md-autocomplete>
+
+
+
+  </form>
+</md-card>

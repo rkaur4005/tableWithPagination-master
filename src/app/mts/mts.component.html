@@ -1,0 +1,111 @@
+<div fxLayout="column">
+  <div fxFlex>
+    <app-header [sidenav]="sidenav"></app-header>
+  </div>
+
+  <md-sidenav-container>
+    <md-sidenav class="sidenav" opened="true" mode="side" #sidenav>
+      <app-sidebar></app-sidebar>
+    </md-sidenav>
+    <div fxFlex fxLayoutGap="10px" fxLayoutAlign="space-around top">
+      <div fxFlex="20" fxLayout="column">
+        <md-toolbar>
+          <div>Message Tracking Service</div>
+          
+        </md-toolbar>
+        <div fxFlex>
+          
+          <app-filter [data]="filterData" [options]="filterQuery" (filter)="onFilter($event)"></app-filter>
+          
+        </div>
+      </div>
+      <div fxFlex fxLayout="column">
+        <div fxLayout="row">
+          <md-toolbar fxFlex>
+            <div>
+              <button [disabled]="!this.selectedItems.length" (click)="onAbort()" md-raised-button>Abort</button>
+              <button [disabled]="!this.selectedItems.length" (click)="onSave()" md-raised-button>Save</button>
+              <button [disabled]="!this.selectedItems.length" (click)="onDelete()" md-raised-button>Delete</button>
+              <button (click)="onRefresh()" md-raised-button>Refresh</button>
+              <button md-raised-button>Group</button>
+              <button md-raised-button (click)="reprocess()">Reprocess</button>
+            </div>
+          </md-toolbar>
+          
+          <div fxFlex="20">
+            <md-input-container>
+              <input mdInput type="search" float="never" placeholder="Search">
+            </md-input-container>
+          </div>
+        </div>
+        <div>
+          <md-table class="table-container" #table [dataSource]="dataSource">
+
+            <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
+            <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
+
+            <ng-container cdkColumnDef="gender">
+              <md-header-cell *cdkHeaderCellDef></md-header-cell>
+              <md-cell *cdkCellDef="let row; let i = index">
+                <md-checkbox [(ngModel)]="checked[i]" (change)="change($event, row)"></md-checkbox>
+              </md-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="status">
+                <md-header-cell *cdkHeaderCellDef></md-header-cell>
+                <md-cell *cdkCellDef="let row">
+                    {{filter || row.status}}    
+                </md-cell>
+              </ng-container>
+
+
+            <ng-container cdkColumnDef="statusColor">
+                <md-header-cell *cdkHeaderCellDef></md-header-cell>
+                <md-cell *cdkCellDef="let row">
+                     <span class="status" [style.background]="statusColor(filter || row.status)"></span>
+                </md-cell>
+              </ng-container>
+
+            <ng-container cdkColumnDef="id">
+              <md-header-cell *cdkHeaderCellDef>MTID</md-header-cell>
+              <md-cell *cdkCellDef="let row">{{row.id.value}}</md-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="login">
+              <md-header-cell *cdkHeaderCellDef>Events</md-header-cell>
+              <md-cell *cdkCellDef="let row">{{row.login.username}}</md-cell>
+            </ng-container>
+
+
+
+
+
+            <ng-container cdkColumnDef="userName">
+              <md-header-cell *cdkHeaderCellDef> System </md-header-cell>
+              <md-cell *cdkCellDef="let row"> {{row.name.first}} </md-cell>
+            </ng-container>
+
+
+            <ng-container cdkColumnDef="userName">
+              <md-header-cell *cdkHeaderCellDef> System </md-header-cell>
+              <md-cell *cdkCellDef="let row"> {{row.name.first}}  </md-cell>
+            </ng-container>
+
+            <ng-container cdkColumnDef="nat">
+              <md-header-cell *cdkHeaderCellDef>Nationality</md-header-cell>
+              <md-cell *cdkCellDef="let row"> {{row.nat}} </md-cell>
+            </ng-container>
+
+          </md-table>
+
+          <md-paginator #paginator [length]="exampleDatabase.data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></md-paginator>
+        </div>
+      </div>
+
+    </div>
+  </md-sidenav-container>
+
+
+
+
+</div>

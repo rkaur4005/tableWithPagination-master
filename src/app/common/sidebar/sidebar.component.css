@@ -1,0 +1,12 @@
+:host{
+    display: block;
+    width:300px;
+}
+i{
+    color : #fff;
+}
+a{
+    text-decoration: none;
+    color : #fff;
+    margin-left:10px;
+}
